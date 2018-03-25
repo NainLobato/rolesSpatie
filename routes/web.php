@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('notes', 'NotesController@index');
+
+Route::group(['middleware' => ['permission:destroy_notes']], function () {
+    Route::get('notes/{id}/destroy', 'NotesController@destroy')->name('notes.destroy');
+});
